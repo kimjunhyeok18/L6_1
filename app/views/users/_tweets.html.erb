@@ -1,27 +1,29 @@
     <!--
         ログインしたらtweetが書ける
     -->
-<% if session[:login_uid] %>
+<% if current_user %>
     <%= link_to 'tweetする', controller: 'tweets', action: 'new' %>
 <% end %>
 
 <P></P>
 
 <% @tweets.each do |t| %>
-
-    <%= t.message %> [tweeted by <%= t.user_id %>]
-    
-    <%= link_to 'いいね', likes_path(tweet_id: t.id), method: :post %>
-    <%= link_to 'いいね削除', like_path(t), method: :delete %>
-    
+        <%= t.message %> [tweeted by <%= User.find(t.user_id).uid %>]
     <!--
         ログインしたアカウントとtweetを書いた人が同じであるか確認。
         同じであれば、削除できる
     -->
-    <% if session[:login_uid].to_i == Tweet.find(t.id).user_id.to_i %>
-        <%= link_to 'Tweet削除', "tweets/#{t.id}", method: :delete %>
-    <% end %>
-    
+    <% if current_user %>
+        <% like = Like.find_by(tweet_id: t.id,user_id: current_user.id) %>
+        <%if like %>
+            <%= link_to 'いいね削除', like_path(t), method: :delete %>
+        <% else %>
+            <%= link_to 'いいね', likes_path(tweet_id: t.id), method: :post %>
+        <% end %>
+        <% if current_user.id.to_s == Tweet.find(t.id).user_id.to_s %>
+            <%= link_to 'Tweet削除', tweet_path(t.id), method: :delete %>
+        <% end %>
+    <% end %>   
     <hr>
 <% end %>
 

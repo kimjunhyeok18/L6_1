@@ -1,14 +1,12 @@
 class LikesController < ApplicationController
     def create
-        tweet = Tweet.find(params[:tweet_id])
-        user = User.find_by(uid: session[:login_uid])
-        user.like_tweets << tweet
+        @like = Like.new(user_id: current_user.id, tweet_id: params[:tweet_id])
+        @like.save
         redirect_to root_path
     end
     def destroy
-        tweet = Tweet.find(params[:id])
-        user = User.find_by(uid: session[:login_uid])
-        tweet.likes.find_by(user_id: user.id).destroy
+        @like = Like.find_by(tweet_id: params[:id],user_id: current_user.id)
+        @like.destroy
         redirect_to root_path
     end
 end

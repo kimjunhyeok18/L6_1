@@ -1,4 +1,4 @@
-<%if session[:login_uid] ==  nil %>
+<%if current_user ==  nil %>
     <%= link_to 'login', '/top/main' ,method: :get %>
 <%else %>
     <%= link_to 'logout', '/top/logout' ,method: :get %>

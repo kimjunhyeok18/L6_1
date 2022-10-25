@@ -1,7 +1,8 @@
-
+<p></p><h2>user_list</h2><p></p>
 <% @user.each do |user| %>
    uid: <%= user.uid %>
    pass: <%= user.pass.slice(0..3) %>....
+   id: <%= user.id %>
     <%= link_to 'delete', "users/#{user.id}", method: :delete %>
     <hr>
 <% end %>

@@ -1,6 +1,6 @@
 logined page
 
-welcome <%= session[:login_uid]%>
+welcome <%= current_user%>
 
 <%= link_to 'signup', controller: 'users', action: 'new' %>
 

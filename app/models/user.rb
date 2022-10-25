@@ -1,4 +1,13 @@
 class User < ApplicationRecord
-    has_many :likes
-    has_many :like_users, through: :likes, source: :user
+    has_many :tweets, dependent: :destroy
+    has_many :likes, dependent: :destroy
+    has_many :like_users, through: :likes, source: :user 
+    validates :password, presence: true, confirmation: true
+    attr_accessor :password, :password_confirmation
+    def password=(val)
+        if val.present?
+            self.pass = BCrypt::Password.create(val)
+        end
+        @password = val
+    end
 end

@@ -1,7 +1,10 @@
-<div>users index page</div>
+<div><h2>index_page</h2></div>
 
-<% if  session[:login_uid] %>
-    welcome <%= session[:login_uid]%>
+<!-- ログインしていればログアウト、でない場合は
+    ログインとアカウント作成を表示する
+-->
+<% if current_user %>
+    welcome <%= current_user.uid%>
     <%= link_to 'ログアウト', "/top/logout" ,method: :get %>
 <% else %>
     <div>
@@ -9,12 +12,15 @@
     <%= render 'signin' %>
     </div>
 <% end %>
+<!-- tweet一覧 -->
 <div>
     <%= render 'tweets' %>
 </div>
+<!-- アカウント削除（未完成) -->
 <div> 
     <%= render 'signout' %>
 </div>
+<!-- ユーザーの一覧 -->
 <div>
     <%= render 'user_list' %>
 </div>

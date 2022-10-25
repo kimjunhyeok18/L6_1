@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get '/top/main', to: 'top#main'
   post 'top/login', to: 'top#login'
   get 'top/logout', to: 'top#logout'
+  delete '/tweets.', to: 'tweets#destroy'
 end
